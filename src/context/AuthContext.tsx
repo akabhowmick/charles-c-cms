@@ -71,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const acct = MOCK_ACCOUNTS.find(
         (a) => a.email === email.trim().toLowerCase() && a.password === password,
       );
-      if (!acct) return "No matching demo account. Use one of the demo logins shown below the form.";
+      if (!acct) return "no_matching_account";
       setUser({ id: acct.email, email: acct.email, name: acct.name, role: acct.role });
       return null;
     }
@@ -82,7 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function signUp(name: string, email: string, password: string): Promise<string | null> {
     if (isMockMode) {
       if (!name.trim() || !email.includes("@") || password.length < 8) {
-        return "Enter a name, a valid email, and a password of at least 8 characters.";
+        return "invalid_signup";
       }
       setUser({ id: email, email: email.trim().toLowerCase(), name: name.trim(), role: "volunteer" });
       return null;

@@ -5,6 +5,7 @@ import { events, GROUP_LABELS } from "@/data/events";
 import { formatDate } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
 import { useSignups } from "@/context/SignupContext";
+import { useLocale } from "@/context/LocaleContext";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Field, Textarea } from "@/components/ui/Input";
@@ -15,6 +16,7 @@ export function EventDetail() {
   const event = events.find((e) => e.id === eventId);
   const { user } = useAuth();
   const { addSignup, cancelSignup, hasSignedUp } = useSignups();
+  const { locale, t } = useLocale();
   const [note, setNote] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
@@ -23,12 +25,10 @@ export function EventDetail() {
   if (!event) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6">
-        <h1 className="font-display text-3xl font-bold">Event not found</h1>
-        <p className="mt-3 text-ink-soft">
-          This event may have been removed or the link is out of date.
-        </p>
+        <h1 className="font-display text-3xl font-bold">{t.eventDetail.notFoundTitle}</h1>
+        <p className="mt-3 text-ink-soft">{t.eventDetail.notFoundBody}</p>
         <Link to="/opportunities" className="mt-6 inline-block">
-          <Button variant="secondary">Back to all opportunities</Button>
+          <Button variant="secondary">{t.eventDetail.backToAll}</Button>
         </Link>
       </div>
     );
@@ -61,7 +61,7 @@ export function EventDetail() {
           to="/opportunities"
           className="inline-flex items-center gap-1.5 text-sm font-semibold text-pine underline-offset-4 hover:underline"
         >
-          <ArrowLeft size={15} aria-hidden="true" /> All opportunities
+          <ArrowLeft size={15} aria-hidden="true" /> {t.eventDetail.backLink}
         </Link>
 
         <div className="mt-6 flex flex-wrap items-center gap-2">
@@ -89,30 +89,30 @@ export function EventDetail() {
           <div className="flex items-start gap-3">
             <CalendarDays size={18} aria-hidden="true" className="mt-0.5 text-pine" />
             <div>
-              <dt className="text-xs font-semibold uppercase tracking-wide text-taupe">Date</dt>
-              <dd className="font-medium">{formatDate(event.date)}</dd>
+              <dt className="text-xs font-semibold uppercase tracking-wide text-taupe">{t.eventDetail.dateLabel}</dt>
+              <dd className="font-medium">{formatDate(event.date, locale)}</dd>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <Clock size={18} aria-hidden="true" className="mt-0.5 text-pine" />
             <div>
-              <dt className="text-xs font-semibold uppercase tracking-wide text-taupe">Time</dt>
+              <dt className="text-xs font-semibold uppercase tracking-wide text-taupe">{t.eventDetail.timeLabel}</dt>
               <dd className="font-medium">{event.time}</dd>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <MapPin size={18} aria-hidden="true" className="mt-0.5 text-pine" />
             <div>
-              <dt className="text-xs font-semibold uppercase tracking-wide text-taupe">Location</dt>
+              <dt className="text-xs font-semibold uppercase tracking-wide text-taupe">{t.eventDetail.locationLabel}</dt>
               <dd className="font-medium">{event.location}</dd>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <Users size={18} aria-hidden="true" className="mt-0.5 text-pine" />
             <div>
-              <dt className="text-xs font-semibold uppercase tracking-wide text-taupe">Spots</dt>
+              <dt className="text-xs font-semibold uppercase tracking-wide text-taupe">{t.eventDetail.spotsLabel}</dt>
               <dd className="font-medium">
-                {full ? "Full" : `${spotsLeft} left of ${event.spotsTotal}`}
+                {full ? t.common.full : t.eventDetail.spotsLeftOfTotal(spotsLeft, event.spotsTotal)}
               </dd>
             </div>
           </div>
@@ -120,49 +120,46 @@ export function EventDetail() {
       </Reveal>
 
       <Reveal delay={200}>
-        <p className="mt-8 leading-relaxed text-ink-soft">{event.description}</p>
+        <p className="mt-8 leading-relaxed text-ink-soft">
+          {locale === "ko" ? event.descriptionKo : event.description}
+        </p>
         <p className="mt-4 text-sm text-ink-soft">
-          Sign-up deadline: <strong className="text-ink">{formatDate(event.signupDeadline)}</strong>
+          {t.eventDetail.signupDeadline}{" "}
+          <strong className="text-ink">{formatDate(event.signupDeadline, locale)}</strong>
         </p>
       </Reveal>
 
       <Reveal delay={280}>
         <div className="mt-10 rounded-2xl bg-pine-tint p-6 sm:p-8">
-          <h2 className="font-display text-2xl font-bold text-pine-deep">Sign up</h2>
+          <h2 className="font-display text-2xl font-bold text-pine-deep">{t.eventDetail.signUpHeading}</h2>
 
           {!user && (
             <div className="mt-4">
-              <p className="text-ink-soft">
-                You'll need an account to reserve a spot. It takes about a minute.
-              </p>
+              <p className="text-ink-soft">{t.eventDetail.needAccount}</p>
               <div className="mt-4 flex gap-3">
                 <Link to="/login">
-                  <Button>Sign in</Button>
+                  <Button>{t.common.signIn}</Button>
                 </Link>
                 <Link to="/signup">
-                  <Button variant="secondary">Create account</Button>
+                  <Button variant="secondary">{t.eventDetail.createAccount}</Button>
                 </Link>
               </div>
             </div>
           )}
 
           {user && full && !signedUp && (
-            <p className="mt-4 text-ink-soft">
-              This event is full. Email serve@demo.church to join the waitlist.
-            </p>
+            <p className="mt-4 text-ink-soft">{t.eventDetail.eventFullMessage}</p>
           )}
 
           {user && signedUp && !done && (
             <div className="mt-4">
-              <p className="font-medium text-pine-deep">
-                You're signed up for this event.
-              </p>
+              <p className="font-medium text-pine-deep">{t.eventDetail.alreadySignedUp}</p>
               <Button
                 variant="danger"
                 className="mt-4"
                 onClick={() => void cancelSignup(event.id, user.id)}
               >
-                Cancel my sign-up
+                {t.eventDetail.cancelMySignup}
               </Button>
             </div>
           )}
@@ -170,10 +167,10 @@ export function EventDetail() {
           {user && done && (
             <div className="mt-4" role="status">
               <p className="font-medium text-pine-deep">
-                You're in, {user.name}. We'll email details before the event.
+                {t.eventDetail.confirmedMessage(user.name)}
               </p>
               <Link to="/dashboard" className="mt-4 inline-block">
-                <Button variant="secondary">View my sign-ups</Button>
+                <Button variant="secondary">{t.eventDetail.viewMySignups}</Button>
               </Link>
             </div>
           )}
@@ -181,15 +178,15 @@ export function EventDetail() {
           {user && !full && !signedUp && !done && (
             <div className="mt-4 space-y-4">
               <Field
-                label="Anything we should know? (optional)"
+                label={t.eventDetail.noteLabel}
                 htmlFor="signup-note"
-                hint="Allergies, availability limits, instrument you play, and so on."
+                hint={t.eventDetail.noteHint}
               >
                 <Textarea
                   id="signup-note"
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
-                  placeholder="Optional note for the organizers"
+                  placeholder={t.eventDetail.notePlaceholder}
                 />
               </Field>
               {error && (
@@ -198,7 +195,7 @@ export function EventDetail() {
                 </p>
               )}
               <Button onClick={() => void handleSignup()} disabled={busy}>
-                {busy ? "Reserving your spot…" : `Reserve my spot`}
+                {busy ? t.eventDetail.reserving : t.eventDetail.reserveMySpot}
               </Button>
             </div>
           )}

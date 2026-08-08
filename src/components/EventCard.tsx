@@ -2,9 +2,11 @@ import { Link } from "@tanstack/react-router";
 import { CalendarDays, MapPin, Users } from "lucide-react";
 import { GROUP_LABELS, type ServeEvent } from "@/data/events";
 import { formatDate } from "@/lib/utils";
+import { useLocale } from "@/context/LocaleContext";
 import { Badge } from "@/components/ui/Badge";
 
 export function EventCard({ event }: { event: ServeEvent }) {
+  const { locale, t } = useLocale();
   const spotsLeft = event.spotsTotal - event.spotsTaken;
   const full = spotsLeft <= 0;
   const group = GROUP_LABELS[event.group];
@@ -17,10 +19,10 @@ export function EventCard({ event }: { event: ServeEvent }) {
           {group.en}
         </Badge>
         {full ? (
-          <span className="text-xs font-semibold text-red-800">Full</span>
+          <span className="text-xs font-semibold text-red-800">{t.common.full}</span>
         ) : (
           <span className="text-xs font-medium text-ink-soft">
-            {spotsLeft} spots left
+            {t.eventCard.spotsLeft(spotsLeft)}
           </span>
         )}
       </div>
@@ -40,21 +42,19 @@ export function EventCard({ event }: { event: ServeEvent }) {
 
       <dl className="mt-4 space-y-1.5 text-sm text-ink-soft">
         <div className="flex items-center gap-2">
-          <dt className="sr-only">Date</dt>
+          <dt className="sr-only">{t.eventCard.dateSr}</dt>
           <CalendarDays size={15} aria-hidden="true" className="text-taupe" />
-          <dd>{formatDate(event.date)}</dd>
+          <dd>{formatDate(event.date, locale)}</dd>
         </div>
         <div className="flex items-center gap-2">
-          <dt className="sr-only">Location</dt>
+          <dt className="sr-only">{t.eventCard.locationSr}</dt>
           <MapPin size={15} aria-hidden="true" className="text-taupe" />
           <dd>{event.location}</dd>
         </div>
         <div className="flex items-center gap-2">
-          <dt className="sr-only">Capacity</dt>
+          <dt className="sr-only">{t.eventCard.capacitySr}</dt>
           <Users size={15} aria-hidden="true" className="text-taupe" />
-          <dd>
-            {event.spotsTaken} of {event.spotsTotal} signed up
-          </dd>
+          <dd>{t.eventCard.signedUpOfTotal(event.spotsTaken, event.spotsTotal)}</dd>
         </div>
       </dl>
 
@@ -64,7 +64,7 @@ export function EventCard({ event }: { event: ServeEvent }) {
           aria-valuenow={event.spotsTaken}
           aria-valuemin={0}
           aria-valuemax={event.spotsTotal}
-          aria-label={`${event.spotsTaken} of ${event.spotsTotal} spots filled`}
+          aria-label={t.eventCard.progressAriaLabel(event.spotsTaken, event.spotsTotal)}
           className="h-1.5 overflow-hidden rounded-full bg-paper-deep"
         >
           <div

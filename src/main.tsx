@@ -7,6 +7,7 @@ import {
   RouterProvider,
 } from "@tanstack/react-router";
 import "./index.css";
+import { LocaleProvider } from "@/context/LocaleContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { SignupProvider } from "@/context/SignupContext";
 import { Layout } from "@/components/Layout";
@@ -47,10 +48,12 @@ declare module "@tanstack/react-router" {
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <AuthProvider>
-      <SignupProvider>
-        <RouterProvider router={router} />
-      </SignupProvider>
-    </AuthProvider>
+    <LocaleProvider>
+      <AuthProvider>
+        <SignupProvider>
+          <RouterProvider router={router} />
+        </SignupProvider>
+      </AuthProvider>
+    </LocaleProvider>
   </React.StrictMode>,
 );

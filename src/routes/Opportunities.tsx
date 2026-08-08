@@ -3,6 +3,7 @@ import { events, GROUP_LABELS, type AgeGroup } from "@/data/events";
 import { EventCard } from "@/components/EventCard";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/Reveal";
+import { useLocale } from "@/context/LocaleContext";
 import { cn } from "@/lib/utils";
 
 const filters: Array<AgeGroup | "everything"> = [
@@ -14,6 +15,7 @@ const filters: Array<AgeGroup | "everything"> = [
 ];
 
 export function Opportunities() {
+  const { t } = useLocale();
   const [filter, setFilter] = useState<AgeGroup | "everything">("everything");
   const shown =
     filter === "everything" ? events : events.filter((e) => e.group === filter);
@@ -23,17 +25,14 @@ export function Opportunities() {
       <Reveal>
         <Eyebrow ko="봉사와 기회" en="Volunteering & opportunities" />
         <h1 className="mt-3 font-display text-4xl font-bold">
-          Find your place to serve
+          {t.opportunities.heading}
         </h1>
-        <p className="mt-3 max-w-2xl text-ink-soft">
-          Every upcoming event, trip, and ongoing team, organized by age group. Sign in
-          to reserve a spot.
-        </p>
+        <p className="mt-3 max-w-2xl text-ink-soft">{t.opportunities.subtitle}</p>
       </Reveal>
 
       <div
         role="group"
-        aria-label="Filter events by age group"
+        aria-label={t.opportunities.filterAriaLabel}
         className="mt-8 flex flex-wrap gap-2"
       >
         {filters.map((f) => (
@@ -49,13 +48,13 @@ export function Opportunities() {
                 : "border-taupe-light bg-white text-ink-soft hover:border-pine hover:text-pine",
             )}
           >
-            {f === "everything" ? "Everything" : GROUP_LABELS[f].en}
+            {f === "everything" ? t.opportunities.filterEverything : GROUP_LABELS[f].en}
           </button>
         ))}
       </div>
 
       <p className="sr-only" role="status">
-        Showing {shown.length} {shown.length === 1 ? "event" : "events"}
+        {t.opportunities.showingCount(shown.length)}
       </p>
 
       <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -68,7 +67,7 @@ export function Opportunities() {
 
       {shown.length === 0 && (
         <p className="mt-12 rounded-2xl border border-dashed border-taupe-light p-10 text-center text-ink-soft">
-          No events in this group right now. Check back soon or browse everything.
+          {t.opportunities.emptyState}
         </p>
       )}
     </div>

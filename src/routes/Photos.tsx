@@ -3,8 +3,10 @@ import { X } from "lucide-react";
 import { photos, type Photo } from "@/data/photos";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/Reveal";
+import { useLocale } from "@/context/LocaleContext";
 
 export function Photos() {
+  const { t } = useLocale();
   const [active, setActive] = useState<Photo | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastFocused = useRef<HTMLElement | null>(null);
@@ -27,11 +29,8 @@ export function Photos() {
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
       <Reveal>
         <Eyebrow ko="사진첩" en="Photos" />
-        <h1 className="mt-3 font-display text-4xl font-bold">From past events</h1>
-        <p className="mt-3 max-w-2xl text-ink-soft">
-          Placeholder tiles for now. Real photos drop in once Charles collects them, with
-          the same grid and lightbox.
-        </p>
+        <h1 className="mt-3 font-display text-4xl font-bold">{t.photos.heading}</h1>
+        <p className="mt-3 max-w-2xl text-ink-soft">{t.photos.subtitle}</p>
       </Reveal>
 
       <ul className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4" role="list">
@@ -42,7 +41,7 @@ export function Photos() {
                 type="button"
                 onClick={() => setActive(p)}
                 className="group block w-full overflow-hidden rounded-2xl text-left"
-                aria-label={`View photo: ${p.alt}`}
+                aria-label={`${t.photos.viewPhotoPrefix} ${p.alt}`}
               >
                 <div
                   className="relative aspect-square w-full transition-transform duration-500 group-hover:scale-[1.04]"
@@ -87,7 +86,7 @@ export function Photos() {
               <button
                 type="button"
                 onClick={() => setActive(null)}
-                aria-label="Close photo view"
+                aria-label={t.photos.closePhotoView}
                 className="rounded-full p-2 text-ink-soft hover:bg-paper-deep"
               >
                 <X aria-hidden="true" />

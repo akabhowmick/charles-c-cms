@@ -2,36 +2,39 @@ import { useState } from "react";
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { useLocale } from "@/context/LocaleContext";
 import { Button } from "@/components/ui/Button";
+import { LocaleToggle } from "@/components/ui/LocaleToggle";
 import { cn } from "@/lib/utils";
-
-const navLinks = [
-  { to: "/opportunities", label: "Opportunities" },
-  { to: "/highlights", label: "Highlights" },
-  { to: "/photos", label: "Photos" },
-  { to: "/about", label: "About" },
-];
 
 export function Layout() {
   const { user, isMock, signOut } = useAuth();
+  const { t } = useLocale();
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  const navLinks = [
+    { to: "/opportunities", label: t.nav.opportunities },
+    { to: "/highlights", label: t.nav.highlights },
+    { to: "/photos", label: t.nav.photos },
+    { to: "/about", label: t.nav.about },
+  ];
 
   return (
     <div className="flex min-h-screen flex-col">
       <a href="#main" className="skip-link">
-        Skip to main content
+        {t.common.skipToMain}
       </a>
 
       {isMock && (
         <p className="bg-ink px-4 py-1.5 text-center text-xs text-paper">
-          Demo mode: data resets on refresh. Connect Supabase keys to persist.
+          {t.layout.demoBanner}
         </p>
       )}
 
       <header className="sticky top-0 z-50 border-b border-taupe-light/50 bg-paper/90 backdrop-blur-md">
         <nav
-          aria-label="Main"
+          aria-label={t.layout.mainNavLabel}
           className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6"
         >
           <Link to="/" className="flex items-baseline gap-2" onClick={() => setOpen(false)}>
@@ -56,6 +59,7 @@ export function Layout() {
                 {l.label}
               </Link>
             ))}
+            <LocaleToggle className="ml-2" />
             {user ? (
               <>
                 <Link
@@ -65,15 +69,15 @@ export function Layout() {
                     pathname.startsWith("/dashboard") && "bg-pine-tint text-pine-deep",
                   )}
                 >
-                  {user.role === "admin" ? "Admin" : "My Sign-ups"}
+                  {user.role === "admin" ? t.common.admin : t.common.mySignups}
                 </Link>
                 <Button variant="ghost" size="sm" onClick={() => void signOut()}>
-                  Sign out
+                  {t.common.signOut}
                 </Button>
               </>
             ) : (
               <Link to="/login" className="ml-2">
-                <Button size="sm">Sign in</Button>
+                <Button size="sm">{t.common.signIn}</Button>
               </Link>
             )}
           </div>
@@ -83,7 +87,7 @@ export function Layout() {
             className="rounded-lg p-2 text-ink md:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? t.layout.closeMenu : t.layout.openMenu}
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
@@ -104,12 +108,15 @@ export function Layout() {
                   </Link>
                 </li>
               ))}
+              <li className="pt-2">
+                <LocaleToggle className="w-full" />
+              </li>
               <li>
                 {user ? (
                   <div className="flex items-center gap-2 pt-2">
                     <Link to="/dashboard" onClick={() => setOpen(false)} className="flex-1">
                       <Button variant="secondary" className="w-full">
-                        {user.role === "admin" ? "Admin" : "My Sign-ups"}
+                        {user.role === "admin" ? t.common.admin : t.common.mySignups}
                       </Button>
                     </Link>
                     <Button
@@ -119,12 +126,12 @@ export function Layout() {
                         setOpen(false);
                       }}
                     >
-                      Sign out
+                      {t.common.signOut}
                     </Button>
                   </div>
                 ) : (
                   <Link to="/login" onClick={() => setOpen(false)} className="block pt-2">
-                    <Button className="w-full">Sign in</Button>
+                    <Button className="w-full">{t.common.signIn}</Button>
                   </Link>
                 )}
               </li>
@@ -149,13 +156,12 @@ export function Layout() {
               </span>
             </p>
             <p className="mt-3 max-w-xs text-sm text-ink-soft">
-              Volunteer opportunities, mission trips, and community events, all in one
-              place.
+              {t.layout.footerTagline}
             </p>
           </div>
-          <nav aria-label="Footer">
+          <nav aria-label={t.layout.footerNavLabel}>
             <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-taupe">
-              Pages
+              {t.layout.footerPagesHeading}
             </h2>
             <ul className="mt-3 space-y-2 text-sm">
               {navLinks.map((l) => (
@@ -169,17 +175,17 @@ export function Layout() {
           </nav>
           <div>
             <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-taupe">
-              Contact
+              {t.layout.footerContactHeading}
             </h2>
             <p className="mt-3 text-sm text-ink-soft">
               serve@demo.church
               <br />
-              Bayside, NY
+              {t.layout.footerAddress}
             </p>
           </div>
         </div>
         <p className="border-t border-taupe-light/40 px-4 py-4 text-center text-xs text-ink-soft">
-          Demo site. Name and branding pending church approval.
+          {t.layout.footerDisclaimer}
         </p>
       </footer>
     </div>

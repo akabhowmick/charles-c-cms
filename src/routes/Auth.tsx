@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useAuth, MOCK_ACCOUNTS } from "@/context/AuthContext";
+import { useLocale } from "@/context/LocaleContext";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/Button";
@@ -8,6 +9,7 @@ import { Field, Input } from "@/components/ui/Input";
 
 export function Login() {
   const { signIn, isMock } = useAuth();
+  const { t } = useLocale();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +21,8 @@ export function Login() {
     setError(null);
     const err = await signIn(email, password);
     setBusy(false);
-    if (err) setError(err);
+    if (err === "no_matching_account") setError(t.auth.errors.noMatchingAccount);
+    else if (err) setError(err);
     else void navigate({ to: "/dashboard" });
   }
 
@@ -27,10 +30,10 @@ export function Login() {
     <div className="mx-auto max-w-md px-4 py-16 sm:px-6">
       <Reveal>
         <Eyebrow ko="로그인" en="Sign in" />
-        <h1 className="mt-3 font-display text-3xl font-bold">Welcome back</h1>
+        <h1 className="mt-3 font-display text-3xl font-bold">{t.auth.login.welcomeBack}</h1>
 
         <div className="mt-8 space-y-5">
-          <Field label="Email" htmlFor="login-email">
+          <Field label={t.common.emailLabel} htmlFor="login-email">
             <Input
               id="login-email"
               type="email"
@@ -40,7 +43,7 @@ export function Login() {
               onKeyDown={(e) => e.key === "Enter" && void handleSubmit()}
             />
           </Field>
-          <Field label="Password" htmlFor="login-password">
+          <Field label={t.common.passwordLabel} htmlFor="login-password">
             <Input
               id="login-password"
               type="password"
@@ -56,23 +59,25 @@ export function Login() {
             </p>
           )}
           <Button className="w-full" onClick={() => void handleSubmit()} disabled={busy}>
-            {busy ? "Signing in…" : "Sign in"}
+            {busy ? t.auth.login.signingIn : t.common.signIn}
           </Button>
           <p className="text-center text-sm text-ink-soft">
-            New here?{" "}
+            {t.auth.login.newHere}{" "}
             <Link to="/signup" className="font-semibold text-pine underline-offset-4 hover:underline">
-              Create an account
+              {t.auth.login.createAnAccount}
             </Link>
           </p>
         </div>
 
         {isMock && (
           <div className="mt-8 rounded-2xl bg-paper-deep p-5 text-sm">
-            <h2 className="font-semibold">Demo logins</h2>
+            <h2 className="font-semibold">{t.auth.login.demoLoginsHeading}</h2>
             <ul className="mt-2 space-y-1 text-ink-soft">
               {MOCK_ACCOUNTS.map((a) => (
                 <li key={a.email}>
-                  <strong className="text-ink">{a.role === "admin" ? "Charles (admin)" : "Volunteer"}:</strong>{" "}
+                  <strong className="text-ink">
+                    {a.role === "admin" ? t.auth.login.adminLabel : t.auth.login.volunteerLabel}:
+                  </strong>{" "}
                   {a.email} / {a.password}
                 </li>
               ))}
@@ -86,6 +91,7 @@ export function Login() {
 
 export function Signup() {
   const { signUp } = useAuth();
+  const { t } = useLocale();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -98,7 +104,8 @@ export function Signup() {
     setError(null);
     const err = await signUp(name, email, password);
     setBusy(false);
-    if (err) setError(err);
+    if (err === "invalid_signup") setError(t.auth.errors.invalidSignup);
+    else if (err) setError(err);
     else void navigate({ to: "/dashboard" });
   }
 
@@ -106,13 +113,11 @@ export function Signup() {
     <div className="mx-auto max-w-md px-4 py-16 sm:px-6">
       <Reveal>
         <Eyebrow ko="회원가입" en="Create account" />
-        <h1 className="mt-3 font-display text-3xl font-bold">Join in</h1>
-        <p className="mt-2 text-sm text-ink-soft">
-          One account for every sign-up, trip, and team.
-        </p>
+        <h1 className="mt-3 font-display text-3xl font-bold">{t.auth.signup.joinIn}</h1>
+        <p className="mt-2 text-sm text-ink-soft">{t.auth.signup.subtitle}</p>
 
         <div className="mt-8 space-y-5">
-          <Field label="Full name" htmlFor="su-name">
+          <Field label={t.auth.signup.fullNameLabel} htmlFor="su-name">
             <Input
               id="su-name"
               autoComplete="name"
@@ -120,7 +125,7 @@ export function Signup() {
               onChange={(e) => setName(e.target.value)}
             />
           </Field>
-          <Field label="Email" htmlFor="su-email">
+          <Field label={t.common.emailLabel} htmlFor="su-email">
             <Input
               id="su-email"
               type="email"
@@ -129,7 +134,7 @@ export function Signup() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </Field>
-          <Field label="Password" htmlFor="su-password" hint="At least 8 characters.">
+          <Field label={t.common.passwordLabel} htmlFor="su-password" hint={t.auth.signup.passwordHint}>
             <Input
               id="su-password"
               type="password"
@@ -144,12 +149,12 @@ export function Signup() {
             </p>
           )}
           <Button className="w-full" onClick={() => void handleSubmit()} disabled={busy}>
-            {busy ? "Creating account…" : "Create account"}
+            {busy ? t.auth.signup.creatingAccount : t.eventDetail.createAccount}
           </Button>
           <p className="text-center text-sm text-ink-soft">
-            Already have one?{" "}
+            {t.auth.signup.alreadyHaveOne}{" "}
             <Link to="/login" className="font-semibold text-pine underline-offset-4 hover:underline">
-              Sign in
+              {t.common.signIn}
             </Link>
           </p>
         </div>

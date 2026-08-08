@@ -9,6 +9,7 @@ export interface ServeEvent {
   time: string;
   location: string;
   description: string;
+  descriptionKo: string;
   spotsTotal: number;
   spotsTaken: number;
   signupDeadline: string;
@@ -33,6 +34,8 @@ export const events: ServeEvent[] = [
     location: "Fellowship Hall",
     description:
       "Pack and sort gift shoeboxes for children overseas. Volunteers sort donations by age group, assemble boxes, and write welcome letters to recipients. No experience needed, and younger kids are welcome with a parent.",
+    descriptionKo:
+      "해외 어린이들을 위한 선물상자를 포장하고 정리합니다. 봉사자들은 기부 물품을 연령별로 분류하고, 상자를 조립하고, 받는 친구에게 보낼 환영 편지를 씁니다. 경험이 없어도 괜찮고, 어린 자녀도 보호자와 함께 참여할 수 있습니다.",
     spotsTotal: 40,
     spotsTaken: 26,
     signupDeadline: "2026-11-07",
@@ -48,6 +51,8 @@ export const events: ServeEvent[] = [
     location: "Oaxaca, Mexico",
     description:
       "A week of construction, dental clinic support, and children's programs alongside our partner church. Team meetings begin in October. Passport required; fundraising support available.",
+    descriptionKo:
+      "협력 교회와 함께 일주일간 건축, 치과 진료 지원, 어린이 프로그램을 진행합니다. 팀 모임은 10월에 시작됩니다. 여권이 필요하며, 모금 지원을 받을 수 있습니다.",
     spotsTotal: 16,
     spotsTaken: 11,
     signupDeadline: "2026-10-15",
@@ -63,6 +68,8 @@ export const events: ServeEvent[] = [
     location: "Hunter Mountain, NY",
     description:
       "Our annual winter retreat: skiing, small groups, evening worship, and way too much hot chocolate. Volunteer chaperones and small-group leaders also needed, and college students are encouraged to apply.",
+    descriptionKo:
+      "매년 열리는 겨울 수련회입니다: 스키, 소그룹 모임, 저녁 예배, 그리고 너무 많은 핫초코가 기다리고 있어요. 인솔 봉사자와 소그룹 리더도 필요하며, 대학생들의 지원을 환영합니다.",
     spotsTotal: 60,
     spotsTaken: 48,
     signupDeadline: "2026-12-20",
@@ -78,6 +85,8 @@ export const events: ServeEvent[] = [
     location: "Education Wing",
     description:
       "Teach Korean language, lead activities, and wrangle elementary schoolers for our two-week summer program. Teaching materials provided; patience not included.",
+    descriptionKo:
+      "2주간 진행되는 여름 프로그램에서 한국어를 가르치고, 활동을 이끌고, 초등학생들을 돌봅니다. 교재는 제공되지만, 인내심은 각자 준비해주세요.",
     spotsTotal: 12,
     spotsTaken: 12,
     signupDeadline: "2026-08-01",
@@ -93,6 +102,8 @@ export const events: ServeEvent[] = [
     location: "Main Sanctuary",
     description:
       "Ongoing openings for vocalists, orchestra players, and choir members across all services. Auditions are informal. Bring your instrument and we'll find you a seat.",
+    descriptionKo:
+      "모든 예배에서 보컬, 오케스트라 연주자, 찬양대원을 상시 모집합니다. 오디션은 편안한 분위기로 진행됩니다. 악기를 가져오시면 자리를 마련해드릴게요.",
     spotsTotal: 20,
     spotsTaken: 9,
     signupDeadline: "2026-12-31",
@@ -108,6 +119,8 @@ export const events: ServeEvent[] = [
     location: "Fellowship Hall",
     description:
       "Help host our church-wide fall dinner: setup crew, kitchen team, and cleanup squad all needed. The kitchen team gets first taste of the galbi. That is the whole pitch.",
+    descriptionKo:
+      "교회 전체가 함께하는 가을 만찬을 도와주세요: 세팅팀, 주방팀, 정리팀 모두 필요합니다. 주방팀은 갈비를 가장 먼저 맛볼 수 있어요. 그게 전부입니다.",
     spotsTotal: 25,
     spotsTaken: 7,
     signupDeadline: "2026-10-17",
