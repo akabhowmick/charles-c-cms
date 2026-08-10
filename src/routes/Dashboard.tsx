@@ -5,7 +5,7 @@ import { useSignups } from "@/context/SignupContext";
 import { useLocale } from "@/context/LocaleContext";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/Reveal";
-import { Button } from "@/components/ui/Button";
+import { Button, buttonClasses } from "@/components/ui/Button";
 import { formatDate } from "@/lib/utils";
 
 export function Dashboard() {
@@ -18,8 +18,8 @@ export function Dashboard() {
       <div className="mx-auto max-w-md px-4 py-20 text-center sm:px-6">
         <h1 className="font-display text-3xl font-bold">{t.dashboard.signInFirstHeading}</h1>
         <p className="mt-3 text-ink-soft">{t.dashboard.signInFirstBody}</p>
-        <Link to="/login" className="mt-6 inline-block">
-          <Button>{t.common.signIn}</Button>
+        <Link to="/login" className={buttonClasses({ className: "mt-6" })}>
+          {t.common.signIn}
         </Link>
       </div>
     );
@@ -46,7 +46,7 @@ export function Dashboard() {
             {t.dashboard.mySignupsHeading}
           </h2>
           {mine.length === 0 ? (
-            <p className="mt-4 rounded-2xl border border-dashed border-taupe-light p-8 text-ink-soft">
+            <p className="mt-4 rounded-2xl border border-dashed border-taupe-strong p-8 text-ink-soft">
               {t.dashboard.nothingYet}{" "}
               <Link to="/opportunities" className="font-semibold text-pine underline-offset-4 hover:underline">
                 {t.dashboard.browseOpportunities}
@@ -61,7 +61,7 @@ export function Dashboard() {
                 return (
                   <li
                     key={s.eventId}
-                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-taupe-light/60 bg-white p-5"
+                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-taupe-strong bg-white p-5"
                   >
                     <div>
                       <p className="font-display text-lg font-bold">{ev.title}</p>
@@ -70,10 +70,12 @@ export function Dashboard() {
                       </p>
                     </div>
                     <div className="flex gap-2">
-                      <Link to="/opportunities/$eventId" params={{ eventId: ev.id }}>
-                        <Button variant="secondary" size="sm">
-                          {t.dashboard.detailsBtn}
-                        </Button>
+                      <Link
+                        to="/opportunities/$eventId"
+                        params={{ eventId: ev.id }}
+                        className={buttonClasses({ variant: "secondary", size: "sm" })}
+                      >
+                        {t.dashboard.detailsBtn}
                       </Link>
                       <Button
                         variant="danger"
@@ -105,7 +107,7 @@ export function Dashboard() {
                 return (
                   <details
                     key={ev.id}
-                    className="group rounded-2xl border border-taupe-light/60 bg-white"
+                    className="group rounded-2xl border border-taupe-strong bg-white"
                   >
                     <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-2 p-5 [&::-webkit-details-marker]:hidden">
                       <span className="font-display text-lg font-bold">{ev.title}</span>
@@ -113,7 +115,7 @@ export function Dashboard() {
                         {t.dashboard.signedUpCount(ev.spotsTaken)} · {formatDate(ev.date, locale)}
                       </span>
                     </summary>
-                    <div className="border-t border-taupe-light/50 p-5">
+                    <div className="border-t border-taupe-strong p-5">
                       {roster.length === 0 ? (
                         <p className="text-sm text-ink-soft">{t.dashboard.noSignupsYet}</p>
                       ) : (
@@ -128,7 +130,7 @@ export function Dashboard() {
                           </thead>
                           <tbody>
                             {roster.map((r) => (
-                              <tr key={r.userId} className="border-t border-taupe-light/40">
+                              <tr key={r.userId} className="border-t border-taupe-strong">
                                 <td className="py-2.5 pr-4 font-medium">{r.userName}</td>
                                 <td className="py-2.5 pr-4 text-ink-soft">{r.createdAt}</td>
                                 <td className="py-2.5 text-ink-soft">{r.note ?? t.common.none}</td>

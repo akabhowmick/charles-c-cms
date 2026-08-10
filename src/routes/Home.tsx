@@ -5,7 +5,7 @@ import { highlights } from "@/data/highlights";
 import { EventCard } from "@/components/EventCard";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/Reveal";
-import { Button } from "@/components/ui/Button";
+import { buttonClasses } from "@/components/ui/Button";
 import { useLocale } from "@/context/LocaleContext";
 import { formatDate } from "@/lib/utils";
 
@@ -44,15 +44,11 @@ export function Home() {
           </Reveal>
           <Reveal delay={360}>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/opportunities">
-                <Button size="lg">
-                  {t.home.browseOpportunities} <ArrowRight size={18} aria-hidden="true" />
-                </Button>
+              <Link to="/opportunities" className={buttonClasses({ size: "lg" })}>
+                {t.home.browseOpportunities} <ArrowRight size={18} aria-hidden="true" />
               </Link>
-              <Link to="/highlights">
-                <Button variant="secondary" size="lg">
-                  {t.home.seePastHighlights}
-                </Button>
+              <Link to="/highlights" className={buttonClasses({ variant: "secondary", size: "lg" })}>
+                {t.home.seePastHighlights}
               </Link>
             </div>
           </Reveal>
@@ -107,10 +103,14 @@ export function Home() {
                 <p className="mt-4 max-w-2xl leading-relaxed text-paper/80">
                   {locale === "ko" ? highlights[0].bodyKo : highlights[0].body}
                 </p>
-                <Link to="/highlights" className="mt-6 inline-block">
-                  <Button variant="secondary" className="border-paper/40 text-paper hover:bg-paper/10">
-                    {t.home.moreHighlights}
-                  </Button>
+                <Link
+                  to="/highlights"
+                  className={buttonClasses({
+                    variant: "secondary",
+                    className: "mt-6 border-paper/40 text-paper hover:bg-paper/10",
+                  })}
+                >
+                  {t.home.moreHighlights}
                 </Link>
               </Reveal>
             </div>

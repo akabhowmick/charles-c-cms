@@ -17,7 +17,7 @@ export function Highlights() {
       <div className="mt-12 space-y-10">
         {highlights.map((h, i) => (
           <Reveal key={h.id} delay={i * 80}>
-            <article className="grid gap-6 rounded-3xl border border-taupe-light/60 bg-white p-8 md:grid-cols-[1fr_auto] md:p-10">
+            <article className="grid gap-6 rounded-3xl border border-taupe-strong bg-white p-8 md:grid-cols-[1fr_auto] md:p-10">
               <div>
                 <p className="flex items-baseline gap-3 text-taupe">
                   <span lang="ko" className="font-display text-base font-bold text-pine">
@@ -33,7 +33,7 @@ export function Highlights() {
                 </p>
               </div>
               {h.stat && (
-                <div className="flex items-center gap-3 border-t border-taupe-light/50 pt-5 md:flex-col md:items-end md:justify-center md:border-l md:border-t-0 md:pl-8 md:pt-0 md:text-right">
+                <div className="flex items-center gap-3 border-t border-taupe-strong pt-5 md:flex-col md:items-end md:justify-center md:border-l md:border-t-0 md:pl-8 md:pt-0 md:text-right">
                   <p className="font-display text-4xl font-bold text-pine">{h.stat.value}</p>
                   <p className="text-sm text-ink-soft md:mt-1">
                     {locale === "ko" ? h.stat.labelKo : h.stat.label}

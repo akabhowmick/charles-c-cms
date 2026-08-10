@@ -31,8 +31,14 @@ const en = {
     footerContactHeading: "Contact",
     footerAddress: "Bayside, NY",
     footerDisclaimer: "Demo site. Name and branding pending church approval.",
+    footerLegalHeading: "Legal",
     switchToKorean: "Switch to Korean",
     switchToEnglish: "영어로 전환",
+  },
+  legal: {
+    privacy: "Privacy",
+    terms: "Terms",
+    accessibility: "Accessibility",
   },
   home: {
     heroTitleLine1: "Serve together.",
@@ -196,8 +202,14 @@ const ko: Dictionary = {
     footerContactHeading: "문의",
     footerAddress: "뉴욕 베이사이드",
     footerDisclaimer: "데모 사이트입니다. 이름과 브랜딩은 교회 승인 대기 중입니다.",
+    footerLegalHeading: "법적 고지",
     switchToKorean: "한국어로 전환",
     switchToEnglish: "Switch to English",
+  },
+  legal: {
+    privacy: "개인정보",
+    terms: "이용약관",
+    accessibility: "접근성",
   },
   home: {
     heroTitleLine1: "함께 섬겨요.",

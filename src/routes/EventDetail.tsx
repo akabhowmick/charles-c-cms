@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useSignups } from "@/context/SignupContext";
 import { useLocale } from "@/context/LocaleContext";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
+import { Button, buttonClasses } from "@/components/ui/Button";
 import { Field, Textarea } from "@/components/ui/Input";
 import { Reveal } from "@/components/Reveal";
 
@@ -27,8 +27,8 @@ export function EventDetail() {
       <div className="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6">
         <h1 className="font-display text-3xl font-bold">{t.eventDetail.notFoundTitle}</h1>
         <p className="mt-3 text-ink-soft">{t.eventDetail.notFoundBody}</p>
-        <Link to="/opportunities" className="mt-6 inline-block">
-          <Button variant="secondary">{t.eventDetail.backToAll}</Button>
+        <Link to="/opportunities" className={buttonClasses({ variant: "secondary", className: "mt-6" })}>
+          {t.eventDetail.backToAll}
         </Link>
       </div>
     );
@@ -85,7 +85,7 @@ export function EventDetail() {
       </Reveal>
 
       <Reveal delay={120}>
-        <dl className="mt-8 grid gap-4 rounded-2xl border border-taupe-light/60 bg-white p-6 sm:grid-cols-2">
+        <dl className="mt-8 grid gap-4 rounded-2xl border border-taupe-strong bg-white p-6 sm:grid-cols-2">
           <div className="flex items-start gap-3">
             <CalendarDays size={18} aria-hidden="true" className="mt-0.5 text-pine" />
             <div>
@@ -137,11 +137,11 @@ export function EventDetail() {
             <div className="mt-4">
               <p className="text-ink-soft">{t.eventDetail.needAccount}</p>
               <div className="mt-4 flex gap-3">
-                <Link to="/login">
-                  <Button>{t.common.signIn}</Button>
+                <Link to="/login" className={buttonClasses()}>
+                  {t.common.signIn}
                 </Link>
-                <Link to="/signup">
-                  <Button variant="secondary">{t.eventDetail.createAccount}</Button>
+                <Link to="/signup" className={buttonClasses({ variant: "secondary" })}>
+                  {t.eventDetail.createAccount}
                 </Link>
               </div>
             </div>
@@ -169,8 +169,8 @@ export function EventDetail() {
               <p className="font-medium text-pine-deep">
                 {t.eventDetail.confirmedMessage(user.name)}
               </p>
-              <Link to="/dashboard" className="mt-4 inline-block">
-                <Button variant="secondary">{t.eventDetail.viewMySignups}</Button>
+              <Link to="/dashboard" className={buttonClasses({ variant: "secondary", className: "mt-4" })}>
+                {t.eventDetail.viewMySignups}
               </Link>
             </div>
           )}

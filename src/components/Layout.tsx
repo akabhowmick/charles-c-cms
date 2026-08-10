@@ -3,7 +3,7 @@ import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useLocale } from "@/context/LocaleContext";
-import { Button } from "@/components/ui/Button";
+import { Button, buttonClasses } from "@/components/ui/Button";
 import { LocaleToggle } from "@/components/ui/LocaleToggle";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +32,7 @@ export function Layout() {
         </p>
       )}
 
-      <header className="sticky top-0 z-50 border-b border-taupe-light/50 bg-paper/90 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-taupe-strong bg-paper/90 backdrop-blur-md">
         <nav
           aria-label={t.layout.mainNavLabel}
           className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6"
@@ -76,8 +76,8 @@ export function Layout() {
                 </Button>
               </>
             ) : (
-              <Link to="/login" className="ml-2">
-                <Button size="sm">{t.common.signIn}</Button>
+              <Link to="/login" className={buttonClasses({ size: "sm", className: "ml-2" })}>
+                {t.common.signIn}
               </Link>
             )}
           </div>
@@ -95,7 +95,7 @@ export function Layout() {
         </nav>
 
         {open && (
-          <div id="mobile-nav" className="border-t border-taupe-light/50 px-4 pb-4 md:hidden">
+          <div id="mobile-nav" className="border-t border-taupe-strong px-4 pb-4 md:hidden">
             <ul className="flex flex-col gap-1 pt-3">
               {navLinks.map((l) => (
                 <li key={l.to}>
@@ -114,10 +114,12 @@ export function Layout() {
               <li>
                 {user ? (
                   <div className="flex items-center gap-2 pt-2">
-                    <Link to="/dashboard" onClick={() => setOpen(false)} className="flex-1">
-                      <Button variant="secondary" className="w-full">
-                        {user.role === "admin" ? t.common.admin : t.common.mySignups}
-                      </Button>
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setOpen(false)}
+                      className={buttonClasses({ variant: "secondary", className: "flex-1" })}
+                    >
+                      {user.role === "admin" ? t.common.admin : t.common.mySignups}
                     </Link>
                     <Button
                       variant="ghost"
@@ -130,8 +132,12 @@ export function Layout() {
                     </Button>
                   </div>
                 ) : (
-                  <Link to="/login" onClick={() => setOpen(false)} className="block pt-2">
-                    <Button className="w-full">{t.common.signIn}</Button>
+                  <Link
+                    to="/login"
+                    onClick={() => setOpen(false)}
+                    className={buttonClasses({ className: "mt-2 w-full" })}
+                  >
+                    {t.common.signIn}
                   </Link>
                 )}
               </li>
@@ -144,8 +150,8 @@ export function Layout() {
         <Outlet />
       </main>
 
-      <footer className="mt-20 border-t border-taupe-light/50 bg-paper-deep">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
+      <footer className="mt-20 border-t border-taupe-strong bg-paper-deep">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
           <div>
             <p className="flex items-baseline gap-2">
               <span lang="ko" className="font-display text-lg font-bold text-pine">
@@ -183,8 +189,30 @@ export function Layout() {
               {t.layout.footerAddress}
             </p>
           </div>
+          <nav aria-label={t.layout.footerLegalHeading}>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-taupe">
+              {t.layout.footerLegalHeading}
+            </h2>
+            <ul className="mt-3 space-y-2 text-sm">
+              <li>
+                <Link to="/privacy" className="text-ink-soft hover:text-pine">
+                  {t.legal.privacy}
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="text-ink-soft hover:text-pine">
+                  {t.legal.terms}
+                </Link>
+              </li>
+              <li>
+                <Link to="/accessibility" className="text-ink-soft hover:text-pine">
+                  {t.legal.accessibility}
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </div>
-        <p className="border-t border-taupe-light/40 px-4 py-4 text-center text-xs text-ink-soft">
+        <p className="border-t border-taupe-strong px-4 py-4 text-center text-xs text-ink-soft">
           {t.layout.footerDisclaimer}
         </p>
       </footer>

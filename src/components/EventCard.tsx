@@ -12,7 +12,7 @@ export function EventCard({ event }: { event: ServeEvent }) {
   const group = GROUP_LABELS[event.group];
 
   return (
-    <article className="group flex h-full flex-col rounded-2xl border border-taupe-light/60 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-taupe/15">
+    <article className="group relative flex h-full flex-col rounded-2xl border border-taupe-strong bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-taupe/15 focus-within:ring-2 focus-within:ring-pine focus-within:ring-offset-2">
       <div className="flex items-center justify-between gap-2">
         <Badge>
           <span lang="ko" className="mr-1.5 font-display">{group.ko}</span>

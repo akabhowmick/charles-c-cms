@@ -11,7 +11,7 @@ export function LocaleToggle({ className }: { className?: string }) {
       onClick={toggleLocale}
       aria-label={locale === "en" ? t.layout.switchToKorean : t.layout.switchToEnglish}
       className={cn(
-        "inline-flex items-center justify-center gap-1.5 rounded-full border border-taupe-light px-3.5 py-1.5 text-sm font-medium text-ink-soft transition-colors hover:border-pine hover:text-pine",
+        "inline-flex items-center justify-center gap-1.5 rounded-full border border-taupe-strong px-3.5 py-1.5 text-sm font-medium text-ink-soft transition-colors hover:border-pine hover:text-pine",
         className,
       )}
     >

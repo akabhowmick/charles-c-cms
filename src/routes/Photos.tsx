@@ -15,8 +15,34 @@ export function Photos() {
     if (!active) return;
     lastFocused.current = document.activeElement as HTMLElement;
     dialogRef.current?.focus();
+
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setActive(null);
+      if (e.key === "Escape") {
+        setActive(null);
+        return;
+      }
+      if (e.key === "Tab" && dialogRef.current) {
+        const focusable = Array.from(
+          dialogRef.current.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+          ),
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        const activeIndex = focusable.indexOf(document.activeElement as HTMLElement);
+        if (activeIndex === -1) {
+          // Focus is still on the dialog's own -1-tabindex container (initial state) — enter the trap.
+          e.preventDefault();
+          (e.shiftKey ? last : first).focus();
+        } else if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     }
     document.addEventListener("keydown", onKey);
     return () => {

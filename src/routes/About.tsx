@@ -39,7 +39,7 @@ export function About() {
       </Reveal>
 
       <Reveal delay={150}>
-        <section aria-labelledby="contact-heading" className="mt-14 rounded-3xl border border-taupe-light/60 bg-white p-8 md:p-10">
+        <section aria-labelledby="contact-heading" className="mt-14 rounded-3xl border border-taupe-strong bg-white p-8 md:p-10">
           <h2 id="contact-heading" className="font-display text-2xl font-bold">
             {t.about.contactHeading}
           </h2>
@@ -75,7 +75,7 @@ export function About() {
                     onChange={(e) =>
                       setForm({ ...form, dept: e.target.value as (typeof departmentIds)[number] })
                     }
-                    className="w-full rounded-lg border border-taupe-light bg-white px-4 py-2.5 text-ink focus:border-pine"
+                    className="w-full rounded-lg border border-taupe-strong bg-white px-4 py-2.5 text-ink focus:border-pine"
                   >
                     {departmentIds.map((id) => (
                       <option key={id} value={id}>

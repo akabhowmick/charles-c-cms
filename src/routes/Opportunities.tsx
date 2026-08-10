@@ -45,7 +45,7 @@ export function Opportunities() {
               "rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
               filter === f
                 ? "border-pine bg-pine text-paper"
-                : "border-taupe-light bg-white text-ink-soft hover:border-pine hover:text-pine",
+                : "border-taupe-strong bg-white text-ink-soft hover:border-pine hover:text-pine",
             )}
           >
             {f === "everything" ? t.opportunities.filterEverything : GROUP_LABELS[f].en}
@@ -66,7 +66,7 @@ export function Opportunities() {
       </div>
 
       {shown.length === 0 && (
-        <p className="mt-12 rounded-2xl border border-dashed border-taupe-light p-10 text-center text-ink-soft">
+        <p className="mt-12 rounded-2xl border border-dashed border-taupe-strong p-10 text-center text-ink-soft">
           {t.opportunities.emptyState}
         </p>
       )}

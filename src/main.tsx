@@ -19,6 +19,9 @@ import { Photos } from "@/routes/Photos";
 import { About } from "@/routes/About";
 import { Login, Signup } from "@/routes/Auth";
 import { Dashboard } from "@/routes/Dashboard";
+import { Privacy } from "@/routes/Privacy";
+import { Terms } from "@/routes/Terms";
+import { Accessibility } from "@/routes/Accessibility";
 
 const rootRoute = createRootRoute({ component: Layout });
 
@@ -32,6 +35,9 @@ const routes = [
   createRoute({ getParentRoute: () => rootRoute, path: "/login", component: Login }),
   createRoute({ getParentRoute: () => rootRoute, path: "/signup", component: Signup }),
   createRoute({ getParentRoute: () => rootRoute, path: "/dashboard", component: Dashboard }),
+  createRoute({ getParentRoute: () => rootRoute, path: "/privacy", component: Privacy }),
+  createRoute({ getParentRoute: () => rootRoute, path: "/terms", component: Terms }),
+  createRoute({ getParentRoute: () => rootRoute, path: "/accessibility", component: Accessibility }),
 ];
 
 const routeTree = rootRoute.addChildren(routes);
