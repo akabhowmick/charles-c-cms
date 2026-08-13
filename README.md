@@ -22,7 +22,7 @@ the sign-in page:
 1. Create a project at supabase.com
 2. Run `supabase/schema.sql` in the SQL editor
 3. Copy `.env.example` to `.env` and fill in `VITE_SUPABASE_URL` and
-   `VITE_SUPABASE_ANON_KEY`
+   `VITE_SUPABASE_PUBLISHABLE_KEY`
 4. Restart the dev server; the mock-mode banner disappears
 
 To make Charles an admin, sign him up normally, then in the SQL editor:
