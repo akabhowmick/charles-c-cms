@@ -10,29 +10,29 @@ export function Terms() {
         <Eyebrow ko="이용약관" en="Terms" />
         <h1 className="mt-3 font-display text-4xl font-bold">Terms of use</h1>
         <p className="mt-2 text-sm text-ink-soft">
-          Last updated: <Todo>[DATE]</Todo>
+          Last updated: <Todo>2026-08-14</Todo>
         </p>
       </Reveal>
 
       <LegalSection heading="What this site is for">
         <p>
-          This site is for browsing and signing up for volunteer opportunities at{" "}
-          <Todo>[CHURCH LEGAL NAME]</Todo>.
+          This site is for browsing and signing up for volunteer opportunities at Faithful Church of
+          New York.
         </p>
       </LegalSection>
 
       <LegalSection heading="Accounts">
         <p>
-          Please keep to one account per person, and keep your password private. Give us
-          accurate information when you sign up. If you are under 18, a parent or guardian
-          must hold the account for you.
+          Please keep to one account per person, and keep your password private. Give us accurate
+          information when you sign up. If you are under 18, a parent or guardian must hold the
+          account for you.
         </p>
       </LegalSection>
 
       <LegalSection heading="Sign-ups">
         <p>
-          Reserving a spot at an event is a request, not a guarantee. Organizers may
-          reassign or cancel spots, and events may change or be cancelled.
+          Reserving a spot at an event is a request, not a guarantee. Organizers may reassign or
+          cancel spots, and events may change or be cancelled.
         </p>
       </LegalSection>
 
@@ -46,29 +46,26 @@ export function Terms() {
       </LegalSection>
 
       <LegalSection heading="Account removal">
-        <p>
-          <Todo>[CHURCH LEGAL NAME]</Todo> may suspend or remove accounts that violate these
-          terms.
-        </p>
+        <p>Faithful Church of New York may suspend or remove accounts that violate these terms.</p>
       </LegalSection>
 
       <LegalSection heading="Liability">
         <p>
-          Participation in events is voluntary and at your own risk. This site is provided
-          as is, with no warranty. Separate waivers may be required for trips and retreats.{" "}
-          <Todo>[CONFIRM WITH CHURCH: waiver process for mission trips]</Todo>
+          Participation in events is voluntary and at your own risk. This site is provided as is,
+          with no warranty. Separate waivers may be required for trips and retreats.{" "}
+          {/* <Todo>[CONFIRM WITH CHURCH: waiver process for mission trips]</Todo> */}
         </p>
       </LegalSection>
 
       <LegalSection heading="Payments">
         <p>
           Payments are not currently collected through this site.{" "}
-          <Todo>[PLACEHOLDER: refund and cancellation terms to be added when payments launch]</Todo>
+          {/* <Todo>[PLACEHOLDER: refund and cancellation terms to be added when payments launch]</Todo> */}
         </p>
       </LegalSection>
 
       <LegalSection heading="Governing law">
-        <p>These terms are governed by the laws of <Todo>[STATE]</Todo>.</p>
+        <p>These terms are governed by the laws of New York.</p>
       </LegalSection>
     </div>
   );

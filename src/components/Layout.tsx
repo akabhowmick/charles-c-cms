@@ -6,6 +6,7 @@ import { useLocale } from "@/context/LocaleContext";
 import { Button, buttonClasses } from "@/components/ui/Button";
 import { LocaleToggle } from "@/components/ui/LocaleToggle";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/logo.png";
 
 export function Layout() {
   const { user, isMock, signOut } = useAuth();
@@ -37,12 +38,10 @@ export function Layout() {
           aria-label={t.layout.mainNavLabel}
           className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6"
         >
-          <Link to="/" className="flex items-baseline gap-2" onClick={() => setOpen(false)}>
-            <span lang="ko" className="font-display text-xl font-bold text-pine">
+          <Link to="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
+            <img src={logo} alt="Faithful Church of New York" className="h-8 w-auto" />
+            <span lang="ko" className="font-display text-lg font-bold text-pine">
               섬김
-            </span>
-            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-ink">
-              The Faithful · Serve
             </span>
           </Link>
 
@@ -153,12 +152,10 @@ export function Layout() {
       <footer className="mt-20 border-t border-taupe-strong bg-paper-deep">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
           <div>
-            <p className="flex items-baseline gap-2">
+            <p className="flex items-center gap-2.5">
+              <img src={logo} alt="Faithful Church of New York" className="h-8 w-auto" />
               <span lang="ko" className="font-display text-lg font-bold text-pine">
                 섬김
-              </span>
-              <span className="text-sm font-semibold uppercase tracking-[0.18em]">
-                The Faithful · Serve
               </span>
             </p>
             <p className="mt-3 max-w-xs text-sm text-ink-soft">
@@ -184,7 +181,7 @@ export function Layout() {
               {t.layout.footerContactHeading}
             </h2>
             <p className="mt-3 text-sm text-ink-soft">
-              serve@demo.church
+              pcha.fcny@gmail.com
               <br />
               {t.layout.footerAddress}
             </p>

@@ -10,14 +10,14 @@ export function Accessibility() {
         <Eyebrow ko="접근성" en="Accessibility" />
         <h1 className="mt-3 font-display text-4xl font-bold">Accessibility</h1>
         <p className="mt-2 text-sm text-ink-soft">
-          Last reviewed: <Todo>[DATE]</Todo>
+          Last reviewed: <Todo>2026-08-14</Todo>
         </p>
       </Reveal>
 
       <LegalSection heading="Our commitment">
         <p>
-          We are building this site to meet WCAG 2.2 Level AA, the standard most public
-          websites are held to for accessibility.
+          We are building this site to meet WCAG 2.2 Level AA, the standard most public websites are
+          held to for accessibility.
         </p>
       </LegalSection>
 
@@ -35,23 +35,22 @@ export function Accessibility() {
 
       <LegalSection heading="Known limitations">
         <p>
-          <Todo>[PLACEHOLDER: list any as they're found]</Todo> The photo gallery currently
-          uses placeholder tiles pending real photos.
+          {/* <Todo>[PLACEHOLDER: list any as they're found]</Todo>  */}
+          The photo gallery currently uses placeholder tiles pending real photos.
         </p>
       </LegalSection>
 
       <LegalSection heading="Third-party services">
         <p>
-          Sign-in and data storage on this site are handled by Supabase. We do not control
-          the accessibility of their interfaces directly.
+          Sign-in and data storage on this site are handled by Supabase. We do not control the
+          accessibility of their interfaces directly.
         </p>
       </LegalSection>
 
       <LegalSection heading="Tell us about a barrier">
         <p>
-          If something on this site does not work for you, email{" "}
-          <Todo>[CONTACT EMAIL]</Todo> and we will respond within{" "}
-          <Todo>[RESPONSE WINDOW]</Todo>. Please describe the page you were on and what
+          If something on this site does not work for you, email clee87823@gmail.com and we will
+          respond within <Todo>24 hours</Todo>. Please describe the page you were on and what
           happened, so we can find and fix it.
         </p>
       </LegalSection>

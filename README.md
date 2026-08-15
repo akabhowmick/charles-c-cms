@@ -25,8 +25,9 @@ the sign-in page:
    `VITE_SUPABASE_PUBLISHABLE_KEY`
 4. Restart the dev server; the mock-mode banner disappears
 
-To make Charles an admin, sign him up normally, then in the SQL editor:
-`update public.profiles set role = 'admin' where name = 'Charles';`
+To make Charles an admin, sign him up normally with `clee87823@gmail.com`, then in the
+SQL editor:
+`update public.profiles set role = 'admin' where id = (select id from auth.users where email = 'clee87823@gmail.com');`
 
 ## Deploy (Netlify)
 

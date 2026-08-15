@@ -11,18 +11,6 @@ topic, each with a rough time estimate.
 The three placeholders below repeat across multiple pages. Once decided, the value gets
 pasted into every spot listed.
 
-- [ ] **Church legal name** (5 min once known) - `Privacy.tsx` Contact section, `Terms.tsx`
-      "What this site is for" and "Account removal" (3 spots total)
-- [ ] **Mailing address** (5 min) - `Privacy.tsx` Contact section (1 spot)
-- [ ] **Contact email for privacy/accessibility requests** (15-30 min if a new inbox/alias
-      needs setting up, 2 min if reusing `serve@demo.church`) - `Privacy.tsx` Photos and Your
-      choices sections, `Accessibility.tsx` Tell us about a barrier section (3 spots)
-- [ ] **Supabase server region** (5 min, check the Supabase project dashboard once it
-      exists) - `Privacy.tsx` Where it's stored section (1 spot)
-- [ ] **Governing law / state** (2 min) - `Terms.tsx` Governing law section (1 spot)
-- [ ] **Publish dates** ("Last updated" / "Last reviewed") (2 min, set when the pages
-      actually go live) - top of all three pages (3 spots)
-
 ### Needs an actual policy decision, not just a lookup
 
 - [ ] **Data retention period** for sign-up records after an event (30-60 min discussion
@@ -33,8 +21,6 @@ pasted into every spot listed.
 - [ ] **Waiver process for mission trips/retreats** - does a paper or digital waiver
       already exist separately from this site? (30-60 min to confirm and summarize) -
       `Terms.tsx` Liability section
-- [ ] **Refund/cancellation terms** - not urgent, payments aren't collected through the
-      site yet. Revisit when payments launch. - `Terms.tsx` Payments section
 
 ### Accessibility-specific placeholders
 
@@ -42,8 +28,6 @@ pasted into every spot listed.
       section. Can partly be filled in now: `EXCEPTIONS.md` EXT-2026-004 (see #3 below) is a
       real, current limitation and can be summarized here in a sentence (10 min once that
       item is resolved one way or the other).
-- [ ] **Response window** for accessibility barrier reports, e.g. "2 business days" (10 min
-      decision) - `Accessibility.tsx` Tell us about a barrier section
 
 ---
 
@@ -66,20 +50,66 @@ See `REPORT.md` and `EXCEPTIONS.md` for full detail on all of these.
 
 ---
 
-## 4. Production readiness (currently running in demo/mock mode)
+## 4. Production readiness
 
-- [ ] **Church name and branding approval** - the site currently ships with a placeholder
-      name ("The Faithful · Serve") and a footer disclaimer saying so
-      (`src/lib/i18n.ts` -> `footerDisclaimer`). Timeline depends on church leadership, not
-      estimable here. Once approved, remove the disclaimer and demo-mode banner copy.
+- [ ] **Fix recursive RLS policy on `profiles` (schema bug, not yet broken in prod, but will
+      be)** - confirmed live via a read-only query against the East US project: any select
+      against `public.profiles` throws `infinite recursion detected in policy for relation
+"profiles" (42P17)`. Root cause in `supabase/schema.sql`: the "Profiles are viewable by
+      owner and admins" policy checks admin status with
+      `exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin')` - a select against `profiles`, inside a policy _on_ `profiles`, which re-triggers the
+      same policy recursively. Two other policies share the identical pattern and are
+      equally broken: `events` "Admins manage events" (all operations) and `signups` "Users
+      see their own signups; admins see all" (the admin-sees-all branch).
+      **Not currently breaking anything** - the app never selects `profiles` or `signups`
+      today (`SignupContext.tsx` keeps signups in local seeded state; only `insert`/`delete`
+      hit Supabase, and neither of those two policies reference `profiles`). **Will break**
+      the moment either of the two big items below ("Real events" admin-create, or any real
+      signup-roster read) gets built.
+      **Standard fix** - a `security definer` helper function that checks admin status
+      without re-invoking RLS, e.g.:
+      `sql
+      create or replace function public.is_admin()
+      returns boolean language sql security definer set search_path = public as $$
+      select exists (select 1 from public.profiles where id = auth.uid() and role = 'admin');
+  $$
+  ;
+  `
+    then replace the three inlined `exists (select ...)` checks with `public.is_admin()`.
+    I did not run this - it's a live schema change on your production database, your call
+    on timing. (~15 min to write + run once you're ready)
+  $$
+- [ ] **Promote the real admin account** - account created (see below), but two steps
+      still need a human: 1. **Charles needs to confirm his email** - Supabase's default email confirmation is
+      on, so `clee87823@gmail.com` has an unconfirmed signup sitting there. He can't sign
+      in until he clicks the confirmation link Supabase sent. (Charles's action, not
+      yours - just make sure he checks that inbox.) 2. **Run the promotion SQL** - `README.md`'s "Connect Supabase" section, in the
+      Supabase SQL editor, to set his `profiles.role` to `'admin'`. This can be run now
+      (doesn't need to wait on email confirmation) - I still can't run it myself, no
+      database access from here. (2 min)
+- [ ] **Security: `handle_new_user()` trusts client-supplied `role`** - found this while
+      setting up Charles's account. `supabase/schema.sql`'s trigger does
+      `coalesce(new.raw_user_meta_data ->> 'role', 'volunteer')` with no server-side check on
+      what role is allowed - it just inserts whatever the signup call's metadata says. The
+      app's own UI always hardcodes `role: "volunteer"` (`AuthContext.tsx`), so nobody hits
+      this through the site itself, but the publishable key is public by design, and anyone
+      who calls the Supabase auth API directly (not through your UI) could pass
+      `role: "admin"` in the signup metadata and self-promote, no SQL editor needed. Real
+      privilege-escalation gap, independent of anything else on this list. Fix is a
+      database-side check (e.g. a trigger that only allows `'volunteer'` regardless of what
+      the client sends, with role changes only ever done via direct SQL/dashboard like the
+      admin promotion above) - flagging for your call on priority, did not touch
+      `schema.sql` since changing it needs to be re-run against the live project.
+- [ ] **Church name and branding approval** - real logo (`src/assets/logo.png`) and church
+      name ("Faithful Church of New York", from fcny.tv) are wired into the header, footer,
+      and legal pages, replacing the placeholder "The Faithful · Serve" wordmark. The footer
+      still says "Demo site. Name and branding pending church approval."
+      (`src/lib/i18n.ts` -> `footerDisclaimer`) enter kordane site into
 
 ---
 
 ## 5. Git repository housekeeping
 
-- [x] `.gitignore` rewritten and `node_modules` / `tsconfig.tsbuildinfo` untracked from
-      git's index this session (files are still on disk, just no longer staged for tracking).
-      **This is staged but not committed** - review with `git status` and commit when ready.
 - [ ] **Repo history still contains the old node_modules commit** (~7,400 files, already
       pushed to `origin/main`). Untracking only stops it from being tracked _going forward_ -
       the old blobs are still in history and already on GitHub. Reclaiming that space needs a
@@ -87,7 +117,6 @@ See `REPORT.md` and `EXCEPTIONS.md` for full detail on all of these.
       which rewrites shared history. Not done here since that needs your explicit go-ahead
       (10-15 min to run, but coordinate first if anyone else has cloned this repo).
 
-Legal pages — run the Claude Code prompt from earlier if you haven't yet. Worth doing before real users touch the site.
 Real events — the six events in src/data/events.ts are still hardcoded mock data, not pulled from Supabase. Right now sign-ups write to Supabase but the events themselves don't. You'll want to either migrate events into the events table and fetch them, or build the admin "create event" form so Charles can add real ones. This is probably the biggest remaining chunk of work.
 Real photos — swap the placeholder color tiles in src/data/photos.ts for actual uploads once Charles has them, plus wire up Supabase Storage if you want him uploading directly rather than you editing the file each time.
 Contact form — right now it just shows a success message locally, nothing actually sends. Needs a real destination (FormSubmit, a Supabase edge function, or similar, like your other client sites).

@@ -26,11 +26,12 @@ const en = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     demoBanner: "Demo mode: data resets on refresh. Connect Supabase keys to persist.",
-    footerTagline: "Volunteer opportunities, mission trips, and community events, all in one place.",
+    footerTagline:
+      "Volunteer opportunities, mission trips, and community events, all in one place.",
     footerPagesHeading: "Pages",
     footerContactHeading: "Contact",
     footerAddress: "Bayside, NY",
-    footerDisclaimer: "Demo site. Name and branding pending church approval.",
+    footerDisclaimer: "Serve together",
     footerLegalHeading: "Legal",
     switchToKorean: "Switch to Korean",
     switchToEnglish: "영어로 전환",
@@ -82,7 +83,7 @@ const en = {
     signUpHeading: "Sign up",
     needAccount: "You'll need an account to reserve a spot. It takes about a minute.",
     createAccount: "Create account",
-    eventFullMessage: "This event is full. Email serve@demo.church to join the waitlist.",
+    eventFullMessage: "This event is full. Email clee87823@gmail.com to join the waitlist.",
     alreadySignedUp: "You're signed up for this event.",
     cancelMySignup: "Cancel my sign-up",
     confirmedMessage: (name: string) => `You're in, ${name}. We'll email details before the event.`,
@@ -144,7 +145,8 @@ const en = {
       alreadyHaveOne: "Already have one?",
     },
     errors: {
-      noMatchingAccount: "No matching demo account. Use one of the demo logins shown below the form.",
+      noMatchingAccount:
+        "No matching demo account. Use one of the demo logins shown below the form.",
       invalidSignup: "Enter a name, a valid email, and a password of at least 8 characters.",
     },
   },
@@ -224,11 +226,13 @@ const ko: Dictionary = {
   },
   opportunities: {
     heading: "나에게 맞는 봉사 자리를 찾아보세요",
-    subtitle: "다가오는 모든 행사, 단기선교, 상시 팀을 연령별로 정리했습니다. 자리를 예약하려면 로그인하세요.",
+    subtitle:
+      "다가오는 모든 행사, 단기선교, 상시 팀을 연령별로 정리했습니다. 자리를 예약하려면 로그인하세요.",
     filterAriaLabel: "연령대별로 행사 필터링",
     filterEverything: "전체",
     showingCount: (n: number) => `${n}개의 행사를 표시 중`,
-    emptyState: "이 그룹에는 지금 등록된 행사가 없습니다. 나중에 다시 확인하거나 전체 목록을 둘러보세요.",
+    emptyState:
+      "이 그룹에는 지금 등록된 행사가 없습니다. 나중에 다시 확인하거나 전체 목록을 둘러보세요.",
   },
   eventCard: {
     spotsLeft: (n: number) => `${n}자리 남음`,
@@ -252,10 +256,12 @@ const ko: Dictionary = {
     signUpHeading: "신청하기",
     needAccount: "자리를 예약하려면 계정이 필요합니다. 1분이면 충분해요.",
     createAccount: "계정 만들기",
-    eventFullMessage: "이 행사는 마감되었습니다. 대기 명단에 등록하려면 serve@demo.church로 이메일을 보내주세요.",
+    eventFullMessage:
+      "이 행사는 마감되었습니다. 대기 명단에 등록하려면 clee87823@gmail.com로 이메일을 보내주세요.",
     alreadySignedUp: "이 행사에 신청 완료되었습니다.",
     cancelMySignup: "신청 취소하기",
-    confirmedMessage: (name: string) => `${name}님, 신청이 완료되었습니다. 행사 전에 이메일로 안내를 보내드릴게요.`,
+    confirmedMessage: (name: string) =>
+      `${name}님, 신청이 완료되었습니다. 행사 전에 이메일로 안내를 보내드릴게요.`,
     viewMySignups: "내 신청 목록 보기",
     noteLabel: "알려주실 내용이 있나요? (선택)",
     noteHint: "알레르기, 참여 가능 시간, 다룰 수 있는 악기 등을 적어주세요.",
@@ -269,7 +275,8 @@ const ko: Dictionary = {
   },
   photos: {
     heading: "지난 행사 사진",
-    subtitle: "지금은 임시 이미지입니다. Charles가 실제 사진을 모으는 대로 같은 그리드와 라이트박스에 반영됩니다.",
+    subtitle:
+      "지금은 임시 이미지입니다. Charles가 실제 사진을 모으는 대로 같은 그리드와 라이트박스에 반영됩니다.",
     viewPhotoPrefix: "사진 보기:",
     closePhotoView: "사진 보기 닫기",
   },
@@ -313,7 +320,8 @@ const ko: Dictionary = {
       alreadyHaveOne: "이미 계정이 있으신가요?",
     },
     errors: {
-      noMatchingAccount: "일치하는 데모 계정이 없습니다. 아래에 표시된 데모 로그인 정보를 사용해주세요.",
+      noMatchingAccount:
+        "일치하는 데모 계정이 없습니다. 아래에 표시된 데모 로그인 정보를 사용해주세요.",
       invalidSignup: "이름, 유효한 이메일, 8자 이상의 비밀번호를 입력해주세요.",
     },
   },
