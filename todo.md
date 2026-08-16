@@ -55,9 +55,10 @@ See `REPORT.md` and `EXCEPTIONS.md` for full detail on all of these.
 - [ ] **Fix recursive RLS policy on `profiles` (schema bug, not yet broken in prod, but will
       be)** - confirmed live via a read-only query against the East US project: any select
       against `public.profiles` throws `infinite recursion detected in policy for relation
-"profiles" (42P17)`. Root cause in `supabase/schema.sql`: the "Profiles are viewable by
+      "profiles" (42P17)`. Root cause in `supabase/schema.sql`: the "Profiles are viewable by
       owner and admins" policy checks admin status with
-      `exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin')` - a select against `profiles`, inside a policy _on_ `profiles`, which re-triggers the
+      `exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin')`
+      - a select against `profiles`, inside a policy *on* `profiles`, which re-triggers the
       same policy recursively. Two other policies share the identical pattern and are
       equally broken: `events` "Admins manage events" (all operations) and `signups` "Users
       see their own signups; admins see all" (the admin-sees-all branch).
@@ -68,25 +69,25 @@ See `REPORT.md` and `EXCEPTIONS.md` for full detail on all of these.
       signup-roster read) gets built.
       **Standard fix** - a `security definer` helper function that checks admin status
       without re-invoking RLS, e.g.:
-      `sql
+      ```sql
       create or replace function public.is_admin()
       returns boolean language sql security definer set search_path = public as $$
-      select exists (select 1 from public.profiles where id = auth.uid() and role = 'admin');
-  $$
-  ;
-  `
-    then replace the three inlined `exists (select ...)` checks with `public.is_admin()`.
-    I did not run this - it's a live schema change on your production database, your call
-    on timing. (~15 min to write + run once you're ready)
-  $$
-- [ ] **Promote the real admin account** - account created (see below), but two steps
-      still need a human: 1. **Charles needs to confirm his email** - Supabase's default email confirmation is
-      on, so `clee87823@gmail.com` has an unconfirmed signup sitting there. He can't sign
-      in until he clicks the confirmation link Supabase sent. (Charles's action, not
-      yours - just make sure he checks that inbox.) 2. **Run the promotion SQL** - `README.md`'s "Connect Supabase" section, in the
-      Supabase SQL editor, to set his `profiles.role` to `'admin'`. This can be run now
-      (doesn't need to wait on email confirmation) - I still can't run it myself, no
-      database access from here. (2 min)
+        select exists (select 1 from public.profiles where id = auth.uid() and role = 'admin');
+      $$;
+      ```
+      then replace the three inlined `exists (select ...)` checks with `public.is_admin()`.
+      I did not run this - it's a live schema change on your production database, your call
+      on timing. (~15 min to write + run once you're ready)
+- [ ] **Promote the real admin account** - account created, but two steps still need a
+      human:
+      1. **Charles needs to confirm his email** - Supabase's default email confirmation is
+         on, so `clee87823@gmail.com` has an unconfirmed signup sitting there. He can't sign
+         in until he clicks the confirmation link Supabase sent. (Charles's action, not
+         yours - just make sure he checks that inbox.)
+      2. **Run the promotion SQL** - `README.md`'s "Connect Supabase" section, in the
+         Supabase SQL editor, to set his `profiles.role` to `'admin'`. This can be run now
+         (doesn't need to wait on email confirmation) - I still can't run it myself, no
+         database access from here. (2 min)
 - [ ] **Security: `handle_new_user()` trusts client-supplied `role`** - found this while
       setting up Charles's account. `supabase/schema.sql`'s trigger does
       `coalesce(new.raw_user_meta_data ->> 'role', 'volunteer')` with no server-side check on
@@ -104,20 +105,10 @@ See `REPORT.md` and `EXCEPTIONS.md` for full detail on all of these.
       name ("Faithful Church of New York", from fcny.tv) are wired into the header, footer,
       and legal pages, replacing the placeholder "The Faithful · Serve" wordmark. The footer
       still says "Demo site. Name and branding pending church approval."
-      (`src/lib/i18n.ts` -> `footerDisclaimer`) enter kordane site into
-
----
-
-## 5. Git repository housekeeping
-
-- [ ] **Repo history still contains the old node_modules commit** (~7,400 files, already
-      pushed to `origin/main`). Untracking only stops it from being tracked _going forward_ -
-      the old blobs are still in history and already on GitHub. Reclaiming that space needs a
-      history rewrite (e.g. `git filter-repo`) followed by a force-push to `origin/main`,
-      which rewrites shared history. Not done here since that needs your explicit go-ahead
-      (10-15 min to run, but coordinate first if anyone else has cloned this repo).
+      (`src/lib/i18n.ts` -> `footerDisclaimer`) since I wasn't told this is signed off, just
+      that these are the real assets to use - confirm and I'll remove that line and the
+      demo-mode banner copy.
 
 Real events — the six events in src/data/events.ts are still hardcoded mock data, not pulled from Supabase. Right now sign-ups write to Supabase but the events themselves don't. You'll want to either migrate events into the events table and fetch them, or build the admin "create event" form so Charles can add real ones. This is probably the biggest remaining chunk of work.
 Real photos — swap the placeholder color tiles in src/data/photos.ts for actual uploads once Charles has them, plus wire up Supabase Storage if you want him uploading directly rather than you editing the file each time.
 Contact form — right now it just shows a success message locally, nothing actually sends. Needs a real destination (FormSubmit, a Supabase edge function, or similar, like your other client sites).
-Deploy to Netlify — same flow as your other projects, build command npm run build, publish dir dist, add the two env vars in Site settings, and add the \_redirects file that's already in public/.
