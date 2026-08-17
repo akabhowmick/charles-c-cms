@@ -203,7 +203,7 @@ const ko: Dictionary = {
     footerPagesHeading: "페이지",
     footerContactHeading: "문의",
     footerAddress: "뉴욕 베이사이드",
-    footerDisclaimer: "데모 사이트입니다. 이름과 브랜딩은 교회 승인 대기 중입니다.",
+    footerDisclaimer: "함께 섬겨요",
     footerLegalHeading: "법적 고지",
     switchToKorean: "한국어로 전환",
     switchToEnglish: "Switch to English",
