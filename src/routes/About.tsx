@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/Reveal";
+import { SocialLinks } from "@/components/SocialLinks";
+import { StaffList } from "@/components/StaffList";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Textarea } from "@/components/ui/Input";
 import { useLocale } from "@/context/LocaleContext";
@@ -36,6 +38,16 @@ export function About() {
           <p>{t.about.paragraph1}</p>
           <p>{t.about.paragraph2}</p>
         </div>
+        <div className="mt-6">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-taupe">
+            {t.about.followHeading}
+          </h2>
+          <SocialLinks className="-ml-2 mt-2" />
+        </div>
+      </Reveal>
+
+      <Reveal delay={100}>
+        <StaffList />
       </Reveal>
 
       <Reveal delay={150}>

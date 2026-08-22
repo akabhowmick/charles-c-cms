@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
+import { SocialLinks } from "@/components/SocialLinks";
 import { useAuth } from "@/context/AuthContext";
 import { useLocale } from "@/context/LocaleContext";
 import { Button, buttonClasses } from "@/components/ui/Button";
@@ -16,8 +17,7 @@ export function Layout() {
 
   const navLinks = [
     { to: "/opportunities", label: t.nav.opportunities },
-    { to: "/highlights", label: t.nav.highlights },
-    { to: "/photos", label: t.nav.photos },
+    { to: "/footsteps", label: t.nav.footsteps },
     { to: "/about", label: t.nav.about },
   ];
 
@@ -185,6 +185,7 @@ export function Layout() {
               <br />
               {t.layout.footerAddress}
             </p>
+            <SocialLinks className="-ml-2 mt-3" />
           </div>
           <nav aria-label={t.layout.footerLegalHeading}>
             <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-taupe">

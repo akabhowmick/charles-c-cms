@@ -73,7 +73,7 @@ This document logs known deviations from accessibility standards (WCAG 2.2 AA / 
 
 ### 1. Basic Details
 - **Exception ID:** EXT-2026-004
-- **Component / Page:** `Photos.tsx` — the decorative Korean-word overlay (`labelKo`) on individual photo tiles, `text-paper/60` over each tile's `tone` background color
+- **Component / Page:** `PhotoGrid.tsx` (rendered by the `/footsteps` route; was `Photos.tsx` before the 2026-08-20 Highlights+Photos merge) — the decorative Korean-word overlay (`labelKo`) on individual photo tiles, `text-paper/60` over each tile's `tone` background color
 - **WCAG Guideline Affected:** 1.4.3 Contrast (Minimum) (AA) — arguable exemption, see below
 - **Severity (User Impact):** 🔵 Low
 - **Risk Owner:** TBD — pending assignment
@@ -90,4 +90,5 @@ This document logs known deviations from accessibility standards (WCAG 2.2 AA / 
 
 ### 4. Resolution Plan and Expiry
 - **Expiry (review-by date):** 2026-09-09
+- **Note (2026-08-20):** the `/photos` route was merged into `/footsteps` and the tile markup moved verbatim to `src/components/PhotoGrid.tsx`. The finding is unchanged — same markup, same `tone` values, same overlay opacity — only its file location moved. Expiry date deliberately **not** extended.
 - **Resolution Criterion:** Either accept as decorative (WCAG exemption) and close with no code change, or adjust the `summer-school` tile's `tone` value (or the overlay's opacity formula) so `paper/60` clears 3:1 against it like the other 7 tiles. Needs a human call on whether the decorative-text exemption applies here — not fixed as part of this session's work since it wasn't part of the originally-scoped fix.

@@ -6,19 +6,13 @@ import { Reveal } from "@/components/Reveal";
 import { useLocale } from "@/context/LocaleContext";
 import { cn } from "@/lib/utils";
 
-const filters: Array<AgeGroup | "everything"> = [
-  "everything",
-  "youth",
-  "college",
-  "adults",
-  "all",
-];
+// "all" doubles as the reset chip and as the open-to-everyone age group.
+const filters: AgeGroup[] = ["all", "youth", "college", "adults"];
 
 export function Opportunities() {
-  const { t } = useLocale();
-  const [filter, setFilter] = useState<AgeGroup | "everything">("everything");
-  const shown =
-    filter === "everything" ? events : events.filter((e) => e.group === filter);
+  const { locale, t } = useLocale();
+  const [filter, setFilter] = useState<AgeGroup>("all");
+  const shown = filter === "all" ? events : events.filter((e) => e.group === filter);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
@@ -48,7 +42,7 @@ export function Opportunities() {
                 : "border-taupe-strong bg-white text-ink-soft hover:border-pine hover:text-pine",
             )}
           >
-            {f === "everything" ? t.opportunities.filterEverything : GROUP_LABELS[f].en}
+            {GROUP_LABELS[f][locale]}
           </button>
         ))}
       </div>

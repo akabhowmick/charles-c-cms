@@ -4,6 +4,7 @@ import {
   createRootRoute,
   createRoute,
   createRouter,
+  redirect,
   RouterProvider,
 } from "@tanstack/react-router";
 import "./index.css";
@@ -14,8 +15,7 @@ import { Layout } from "@/components/Layout";
 import { Home } from "@/routes/Home";
 import { Opportunities } from "@/routes/Opportunities";
 import { EventDetail } from "@/routes/EventDetail";
-import { Highlights } from "@/routes/Highlights";
-import { Photos } from "@/routes/Photos";
+import { Footsteps } from "@/routes/Footsteps";
 import { About } from "@/routes/About";
 import { Login, Signup } from "@/routes/Auth";
 import { Dashboard } from "@/routes/Dashboard";
@@ -29,8 +29,22 @@ const routes = [
   createRoute({ getParentRoute: () => rootRoute, path: "/", component: Home }),
   createRoute({ getParentRoute: () => rootRoute, path: "/opportunities", component: Opportunities }),
   createRoute({ getParentRoute: () => rootRoute, path: "/opportunities/$eventId", component: EventDetail }),
-  createRoute({ getParentRoute: () => rootRoute, path: "/highlights", component: Highlights }),
-  createRoute({ getParentRoute: () => rootRoute, path: "/photos", component: Photos }),
+  createRoute({ getParentRoute: () => rootRoute, path: "/footsteps", component: Footsteps }),
+  // /highlights and /photos merged into /footsteps; keep the old paths alive for bookmarks.
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: "/highlights",
+    beforeLoad: () => {
+      throw redirect({ to: "/footsteps" });
+    },
+  }),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: "/photos",
+    beforeLoad: () => {
+      throw redirect({ to: "/footsteps" });
+    },
+  }),
   createRoute({ getParentRoute: () => rootRoute, path: "/about", component: About }),
   createRoute({ getParentRoute: () => rootRoute, path: "/login", component: Login }),
   createRoute({ getParentRoute: () => rootRoute, path: "/signup", component: Signup }),

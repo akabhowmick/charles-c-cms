@@ -16,8 +16,7 @@ const en = {
   },
   nav: {
     opportunities: "Opportunities",
-    highlights: "Highlights",
-    photos: "Photos",
+    footsteps: "Church Footsteps",
     about: "About",
   },
   layout: {
@@ -35,6 +34,7 @@ const en = {
     footerLegalHeading: "Legal",
     switchToKorean: "Switch to Korean",
     switchToEnglish: "영어로 전환",
+    socialLinkLabel: (name: string) => `${name} (opens in a new tab)`,
   },
   legal: {
     privacy: "Privacy",
@@ -51,15 +51,16 @@ const en = {
     openForSignupNow: "Open for sign-up now",
     viewAllEvents: "View all events",
     moreHighlights: "More highlights",
+    heroPause: "Pause background images",
+    heroPlay: "Play background images",
   },
   opportunities: {
     heading: "Find your place to serve",
     subtitle:
       "Every upcoming event, trip, and ongoing team, organized by age group. Sign in to reserve a spot.",
     filterAriaLabel: "Filter events by age group",
-    filterEverything: "Everything",
     showingCount: (n: number) => `Showing ${n} ${n === 1 ? "event" : "events"}`,
-    emptyState: "No events in this group right now. Check back soon or browse everything.",
+    emptyState: "No events in this group right now. Check back soon or pick All Ages to see them all.",
   },
   eventCard: {
     spotsLeft: (n: number) => `${n} spots left`,
@@ -94,14 +95,16 @@ const en = {
     reserving: "Reserving your spot…",
     reserveMySpot: "Reserve my spot",
   },
-  highlights: {
-    heading: "Moments worth keeping",
-    subtitle: "Short reflections from past trips, drives, and seasons of serving.",
-  },
-  photos: {
-    heading: "From past events",
+  footsteps: {
+    heading: "Where we've walked",
     subtitle:
+      "The trips, drives, and seasons of serving behind us, year by year, with the photos that came out of them.",
+    reviewsHeading: "The year in review",
+    photosHeading: "Photos",
+    photosSubtitle:
       "Placeholder tiles for now. Real photos drop in once Charles collects them, with the same grid and lightbox.",
+    yearLabel: (year: number) => `${year}`,
+    loading: "Loading the year in review…",
     viewPhotoPrefix: "View photo:",
     closePhotoView: "Close photo view",
   },
@@ -111,6 +114,10 @@ const en = {
       "Serving at our church used to live in group chats, paper sign-up sheets, and one very overworked spreadsheet. Events got planned, but finding out about them depended on who you happened to talk to on Sunday.",
     paragraph2:
       "This site puts everything in one place: what's coming up, who it's for, how many spots are left, and a sign-up that takes two minutes. It was started by a student volunteer who got tired of watching adults spend more time on paperwork than with people.",
+    followHeading: "Follow us",
+    staffHeading: "The people behind it",
+    staffSubtitle:
+      "Staff and volunteer leads who keep these events running. Everyone here has given consent to be listed.",
     contactHeading: "Get in touch",
     sentMessage: "Message sent. Someone from the right team will reply within a few days.",
     nameLabel: "Name",
@@ -189,8 +196,7 @@ const ko: Dictionary = {
   },
   nav: {
     opportunities: "봉사 기회",
-    highlights: "지난 이야기",
-    photos: "사진첩",
+    footsteps: "교회 발자취",
     about: "소개",
   },
   layout: {
@@ -207,6 +213,7 @@ const ko: Dictionary = {
     footerLegalHeading: "법적 고지",
     switchToKorean: "한국어로 전환",
     switchToEnglish: "Switch to English",
+    socialLinkLabel: (name: string) => `${name} (새 탭에서 열림)`,
   },
   legal: {
     privacy: "개인정보",
@@ -223,16 +230,17 @@ const ko: Dictionary = {
     openForSignupNow: "지금 신청 가능한 일정",
     viewAllEvents: "전체 일정 보기",
     moreHighlights: "더 많은 이야기 보기",
+    heroPause: "배경 이미지 자동 전환 멈추기",
+    heroPlay: "배경 이미지 자동 전환 재생",
   },
   opportunities: {
     heading: "나에게 맞는 봉사 자리를 찾아보세요",
     subtitle:
       "다가오는 모든 행사, 단기선교, 상시 팀을 연령별로 정리했습니다. 자리를 예약하려면 로그인하세요.",
     filterAriaLabel: "연령대별로 행사 필터링",
-    filterEverything: "전체",
     showingCount: (n: number) => `${n}개의 행사를 표시 중`,
     emptyState:
-      "이 그룹에는 지금 등록된 행사가 없습니다. 나중에 다시 확인하거나 전체 목록을 둘러보세요.",
+      "이 그룹에는 지금 등록된 행사가 없습니다. 나중에 다시 확인하거나 '전체'를 선택해 모두 둘러보세요.",
   },
   eventCard: {
     spotsLeft: (n: number) => `${n}자리 남음`,
@@ -269,14 +277,16 @@ const ko: Dictionary = {
     reserving: "자리를 예약하는 중…",
     reserveMySpot: "자리 예약하기",
   },
-  highlights: {
-    heading: "간직하고 싶은 순간들",
-    subtitle: "지난 단기선교, 캠페인, 봉사의 계절에서 나온 짧은 이야기들입니다.",
-  },
-  photos: {
-    heading: "지난 행사 사진",
+  footsteps: {
+    heading: "우리가 걸어온 길",
     subtitle:
+      "지난 단기선교, 캠페인, 봉사의 계절을 해마다 정리하고, 그때 남은 사진들을 함께 모았습니다.",
+    reviewsHeading: "연간 돌아보기",
+    photosHeading: "사진첩",
+    photosSubtitle:
       "지금은 임시 이미지입니다. Charles가 실제 사진을 모으는 대로 같은 그리드와 라이트박스에 반영됩니다.",
+    yearLabel: (year: number) => `${year}년`,
+    loading: "연간 돌아보기를 불러오는 중…",
     viewPhotoPrefix: "사진 보기:",
     closePhotoView: "사진 보기 닫기",
   },
@@ -286,6 +296,10 @@ const ko: Dictionary = {
       "예전에는 교회 봉사 신청이 단체 채팅방, 종이 신청서, 그리고 늘 과부하 걸린 스프레드시트에 흩어져 있었습니다. 행사는 기획되었지만, 그 소식을 아는지는 주일에 누구와 이야기했느냐에 달려 있었죠.",
     paragraph2:
       "이 사이트는 다가오는 일정, 대상, 남은 자리, 그리고 2분이면 끝나는 신청까지 모든 것을 한곳에 모았습니다. 어른들이 사람보다 서류에 더 많은 시간을 쓰는 모습에 지친 한 학생 봉사자가 시작했습니다.",
+    followHeading: "팔로우하기",
+    staffHeading: "함께하는 사람들",
+    staffSubtitle:
+      "이 행사들을 이끌어 가는 교역자와 봉사 리더입니다. 모두 명단 공개에 동의해 주셨습니다.",
     contactHeading: "문의하기",
     sentMessage: "메시지가 전송되었습니다. 담당 팀에서 며칠 안에 답변드릴게요.",
     nameLabel: "이름",
